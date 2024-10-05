@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Esas</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #ffffff 0%, #f4f4f4 100%);
+            background-attachment: fixed;
+        }
+        .header {
+            background-color: #004d80;
+            color: white;
+            text-align: left;
+            padding: 20px;
+            padding-left: 40px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .header p {
+            margin: 5px 0 0;
+            font-size: 1.2em;
+        }
+        .nav-bar {
+            background-color: #2980b9;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .nav-bar button {
+            background-color: #2980b9;
+            border: none;
+            color: white;
+            padding: 14px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .nav-bar button:hover {
+            background-color: #3498db;
+        }
+        .slider-container {
+            width: 35%;
+            margin: 60px auto;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(166, 240, 176, 0.733);
+            border-radius: 10px;
+        }
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .slide.active {
+            opacity: 1;
+        }
+        .slide img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .slider-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+        .prev, .next {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .content {
+            padding: 20px;
+            display: none;
+            font-size: 24px;
+        }
+        .content.active {
+            display: block;
+        }
+        .mission-vision {
+            text-align: center;
+            padding: 20px;
+        }
+        .mission-vision img {
+            width: 50%;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>eSAS: Web-Based Student Organization Information System with Club Membership Module</h1>
+        <p>Welcome to our Club System</p>
+    </div>
+    <div class="nav-bar">
+        <button onclick="showSection('menu')">Mission & Vision</button>
+        <button onclick="showSection('csg')">CSG Officers</button>
+        <button onclick="showSection('sbo')">SBO Officers</button>
+    </div>
+    <div id="menu" class="content mission-vision">
+        <h2>Vision</h2>
+        <p>Northern Bukidnon State College will be a college of choice, nationally recognized for having innovative and sustainable academic programs, research, extensions, and services that cultivate educational, personal, and professional growth to meet the needs of our students, our society, and the global community.</p>
+        <h3>Mission</h3>
+        <p>Northern Bukidnon State College is an accessible institution of higher education that provides quality educational opportunities to develop students into socially responsible, competent, and productive professionals.</p>
+    </div>
+    <div id="sbo" class="content">
+        <div class="slider-container">
+            <div class="slides">
+                <div class="slide active">
+                    <img src="ITT.png" alt="IT gani">
+                </div>
+                <div class="slide">
+                    <img src="BisnisAd.png" alt="BisnisAd">
+                </div>
+                <div class="slide">
+                    <img src="TEP.png" alt="TEP">
+                </div>
+            </div>
+            <div class="slider-buttons">
+                <button class="prev" onclick="changeSlide(-1, 'sbo')">&#10094;</button>
+                <button class="next" onclick="changeSlide(1, 'sbo')">&#10095;</button>
+            </div>
+        </div>
+    </div>
+    <div id="csg" class="content">
+        <div class="slider-container">
+            <div class="slides">
+                <div class="slide active">
+                    <img src="CSGG.jpeg" alt="CSG Image 1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlides = { sbo: 0, csg: 0 };
+
+        function showSection(sectionId) {
+            // Hide all content sections
+            var contents = document.getElementsByClassName('content');
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].classList.remove('active');
+            }
+            // Show the selected section
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function changeSlide(direction, section) {
+            const slides = document.querySelectorAll(`#${section} .slide`);
+            slides[currentSlides[section]].classList.remove('active');
+
+            currentSlides[section] = (currentSlides[section] + direction + slides.length) % slides.length;
+
+            slides[currentSlides[section]].classList.add('active');
+            document.querySelector(`#${section} .slides`).style.transform = `translateX(-${currentSlides[section] * 100}%)`;
+        }
+
+        // Show the menu section by default
+        showSection('menu');
+    </script>
+</body>
+</html>
